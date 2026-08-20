@@ -29,9 +29,9 @@ function defaultState() {
     ['HireVue', 'normal'],
     ['Round 1 / Case', 'normal'],
     ['Round 2', 'normal'],
-    ['More?', 'normal'],
     ['Accepted', 'accepted'],
     ['Rejected', 'rejected'],
+    ['Archive', 'archive'],
   ];
   const stages = stageDefs.map(([name, kind]) => ({ id: uid(), name, kind }));
   const tags = [
@@ -115,6 +115,24 @@ function loadState() {
 }
 
 let state = loadState();
+normalizeArchiveStage();
+
+function normalizeArchiveStage() {
+  const idx = state.stages.findIndex(s => s.name.trim().toLowerCase() === 'archive');
+  if (idx === -1) return;
+  const stage = state.stages[idx];
+  let changed = false;
+  if (stage.kind !== 'accepted' && stage.kind !== 'rejected' && stage.kind !== 'archive') {
+    stage.kind = 'archive';
+    changed = true;
+  }
+  if (idx !== state.stages.length - 1) {
+    state.stages.splice(idx, 1);
+    state.stages.push(stage);
+    changed = true;
+  }
+  if (changed) saveState();
+}
 
 let persistenceBroken = false;
 
@@ -258,6 +276,7 @@ function renderColumn(stage) {
   col.className = 'column';
   if (stage.kind === 'accepted') col.classList.add('stage-accepted');
   if (stage.kind === 'rejected') col.classList.add('stage-rejected');
+  if (stage.kind === 'archive') col.classList.add('stage-archive');
   col.dataset.stageId = stage.id;
 
   const header = document.createElement('div');
@@ -333,7 +352,7 @@ function renderCard(app) {
   card.dataset.appId = app.id;
 
   const stage = getStage(app.stage);
-  if (stage && stage.kind === 'rejected') card.classList.add('rejected-card');
+  if (stage && (stage.kind === 'rejected' || stage.kind === 'archive')) card.classList.add('rejected-card');
 
   const title = document.createElement('p');
   title.className = 'card-title';

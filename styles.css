@@ -177,6 +177,10 @@ html, body {
   background: var(--rejected-bg);
   border-color: #ddc9c5;
 }
+.column.stage-archive {
+  background: #e6e4e0;
+  border-color: #d3d0c9;
+}
 
 .column-header {
   padding: 14px 16px 10px 16px;
