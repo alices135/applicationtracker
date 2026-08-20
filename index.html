@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Applications</title>
+<link rel="stylesheet" href="styles.css?v=2" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">◆</span>
+        <h1>Applications</h1>
+      </div>
+
+      <div class="controls">
+        <div class="search-wrap">
+          <input id="search-input" type="text" placeholder="Search company or title…" />
+        </div>
+        <div class="filter-wrap">
+          <button id="filter-btn" class="ghost-btn">Filter tags ▾</button>
+          <div id="filter-menu" class="dropdown-menu hidden"></div>
+        </div>
+        <div class="sort-wrap">
+          <select id="sort-select" class="ghost-select">
+            <option value="manual">Manual order</option>
+            <option value="date-asc">Date applied (oldest)</option>
+            <option value="date-desc">Date applied (newest)</option>
+            <option value="deadline">Deadline (soonest)</option>
+            <option value="az">Company A–Z</option>
+          </select>
+        </div>
+        <button id="add-stage-btn" class="ghost-btn">+ Stage</button>
+        <button id="sync-btn" class="ghost-btn">⇄ Sync</button>
+        <button id="add-app-btn" class="primary-btn">+ Add Application</button>
+      </div>
+    </header>
+
+    <main id="board" class="board"></main>
+  </div>
+
+  <!-- Detail panel overlay -->
+  <div id="detail-overlay" class="overlay hidden">
+    <div id="detail-panel" class="detail-panel">
+      <button id="detail-close" class="icon-btn close-btn" title="Close">×</button>
+      <div class="detail-scroll" id="detail-content"></div>
+    </div>
+  </div>
+
+  <!-- Tag editor modal -->
+  <div id="tag-modal-overlay" class="overlay hidden">
+    <div class="mini-modal">
+      <h3>Manage Tags</h3>
+      <div id="tag-list" class="tag-list"></div>
+      <div class="tag-new-row">
+        <input id="tag-new-name" type="text" placeholder="New tag name" />
+        <input id="tag-new-color" type="color" value="#8a8f5c" />
+        <button id="tag-new-add" class="primary-btn small">Add</button>
+      </div>
+      <button id="tag-modal-close" class="ghost-btn" style="margin-top:16px;">Done</button>
+    </div>
+  </div>
+
+  <!-- Sheet sync modal -->
+  <div id="sync-overlay" class="overlay hidden">
+    <div class="mini-modal">
+      <h3>Sync to Google Sheet</h3>
+      <p class="confirm-message">Paste your Apps Script Web App URL. Every change here will be pushed to a dedicated tab in your sheet (existing tabs are left alone).</p>
+      <input id="sync-url-input" type="text" class="confirm-input" placeholder="https://script.google.com/macros/s/…/exec" />
+      <div id="sync-status" class="sync-status"></div>
+      <div class="confirm-actions">
+        <button id="sync-help-btn" class="ghost-btn">Setup instructions</button>
+        <button id="sync-now-btn" class="ghost-btn">Sync now</button>
+        <button id="sync-save-btn" class="primary-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic confirm/prompt modal -->
+  <div id="confirm-overlay" class="overlay hidden">
+    <div class="mini-modal">
+      <h3 id="confirm-title">Are you sure?</h3>
+      <p id="confirm-message" class="confirm-message"></p>
+      <input id="confirm-input" type="text" class="confirm-input hidden" />
+      <div class="confirm-actions">
+        <button id="confirm-cancel" class="ghost-btn">Cancel</button>
+        <button id="confirm-ok" class="primary-btn">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js?v=3"></script>
+</body>
+</html>
